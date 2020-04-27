@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
-import { Container} from 'native-base';
+import { Container } from 'native-base';
 import FooterBookTicket from './footer';
 import ContentBookTicket from './content';
 class MainBookTicket extends Component {
@@ -12,8 +12,8 @@ class MainBookTicket extends Component {
   render() {
     return (
       <Container>
-        <ContentBookTicket />
-        <FooterBookTicket navigation={this.props.navigation}/>
+        <ContentBookTicket navigation={this.props.navigation} />
+        <FooterBookTicket navigation={this.props.navigation} />
       </Container>
     );
   }
