@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, Button } from 'react-native';
 import { Content } from 'native-base';
 import ImageCarosel from './imageCarosel';
+import ImageCaroselBottom from './imageCaroselBottom';
 const images = [
   'https://image.freepik.com/free-photo/fried-eggs-drinks-breakfast_23-2147758279.jpg',
   'https://image.freepik.com/free-photo/indian-masala-egg-omelet_136595-191.jpg',
@@ -37,6 +38,7 @@ class ContentBookTicket extends Component {
         <View style={styles.viewbtnBookTicket}>
           <Button title="Đăng kí/Đăng nhập" />
         </View>
+        <ImageCaroselBottom images={images}/>
       </Content>
     );
   }

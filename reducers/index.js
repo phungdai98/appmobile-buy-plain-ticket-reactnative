@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
-import clientReducer from './../reducers/lists-plain';
+import listAirport from './lists-airport';
 const appReducers = combineReducers({
-  clientReducer,
+  listAirport,
 });
 export default appReducers;
