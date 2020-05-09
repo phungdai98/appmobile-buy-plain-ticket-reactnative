@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
-import { View, Text, SafeAreaView, Button, ScrollView, StyleSheet, Dimensions } from 'react-native';
+import { View, Text, SafeAreaView, Button, ScrollView, StyleSheet, Dimensions, ImageBackground } from 'react-native';
 import { ModalSelectList } from 'react-native-modal-select-list';
 import { actFetAirportResquest } from './../../actions/index';
 import { connect } from 'react-redux';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
 const DEVICE_WIDTH = Dimensions.get('window').width;
 const DEVICE_HEIGHT = Dimensions.get('window').height;
+const image = {
+  uri:
+    'https://www.vir.com.vn/stores/news_dataimages/nguyenhuong/092019/05/18/in_article/vietnam-airlines-granted-for-direct-flights-to-the-us.jpg',
+};
 class BookTicket extends Component {
   constructor(props) {
     super(props);
@@ -13,6 +18,11 @@ class BookTicket extends Component {
       airportFrom: '',
       modalRefTo: '',
       airportTo: '',
+      dateFrom: '',
+      dateTo: '',
+      isDatePickerVisibleFrom: false,
+      isDatePickerVisibleTo: false,
+      stylePlane: 2,
     };
   }
   openModal = () => this.state.modalRef.show();
@@ -37,65 +47,163 @@ class BookTicket extends Component {
       airportTo: value,
     });
   };
+  showDatePicker = () => {
+    this.setState({
+      isDatePickerVisibleFrom: true,
+    });
+  };
+
+  hideDatePicker = () => {
+    this.setState({
+      isDatePickerVisibleFrom: false,
+    });
+  };
+  formatDate(date) {
+    var d = new Date(date),
+      month = '' + (d.getMonth() + 1),
+      day = '' + d.getDate(),
+      year = d.getFullYear();
+
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+
+    return [year, month, day].join('-');
+  }
+  handleConfirm = (date) => {
+    this.hideDatePicker();
+
+    this.setState({
+      dateFrom: this.formatDate(date),
+    });
+  };
+  showDatePickerTo = () => {
+    this.setState({
+      isDatePickerVisibleTo: true,
+    });
+  };
+
+  hideDatePickerTo = () => {
+    this.setState({
+      isDatePickerVisibleTo: false,
+    });
+  };
+  handleConfirmTo = (date) => {
+    this.hideDatePickerTo();
+
+    this.setState({
+      dateTo: this.formatDate(date),
+    });
+  };
+  onChangeStyle = (status) => {
+    this.setState({
+      stylePlane: status,
+    });
+  };
   componentDidMount() {
     this.props.fetAllAirport();
   }
   render() {
     let { airPort } = this.props;
-    let { airportFrom, airportTo } = this.state;
+    let { airportFrom, airportTo, isDatePickerVisibleFrom, dateFrom, dateTo, isDatePickerVisibleTo, stylePlane } = this.state;
     return (
       <ScrollView>
-        <View>
-          <View style={styles.formSearchAirport}>
-            <View>
-              <View>
-                <Text>Chọn nơi đi</Text>
+        <ImageBackground source={image} style={styles.imageBackground}>
+          <View>
+            <View style={styles.btnStylePlane}>
+              <View style={styles.btnChange}>
+                <Button title="Một chiều" color={stylePlane===1?'#088A08':''} onPress={() => this.onChangeStyle(1)} />
               </View>
-              <View style={styles.inputAirportFrom}>
-                <Text style={{ position: 'absolute', bottom: 0 }}>{airportFrom}</Text>
-              </View>
-              <View style={styles.btnSearchAirport}>
-                <Button title="Open Modal" onPress={this.openModal} />
+              <View style={styles.btnChange}>
+                <Button title="Khứ hồi" color={stylePlane===2?'#088A08':''} onPress={() => this.onChangeStyle(2)} />
               </View>
             </View>
-            <View style={{ paddingTop: 10 }}>
+            <View style={styles.formSearchAirport}>
               <View>
-                <Text>Chọn nơi đến</Text>
+                <View>
+                  <Text>Chọn nơi đi</Text>
+                </View>
+                <View style={styles.inputAirportFrom}>
+                  <Text style={{ position: 'absolute', bottom: 0 }}>{airportFrom}</Text>
+                </View>
+                <View style={styles.btnSearchAirport}>
+                  <Button title="Open Modal" onPress={this.openModal} />
+                </View>
               </View>
-              <View style={styles.inputAirportTo}>
-                <Text style={{ position: 'absolute', bottom: 0 }}>{airportTo}</Text>
+              <View style={{ paddingTop: 10 }}>
+                <View>
+                  <Text>Chọn nơi đến</Text>
+                </View>
+                <View style={styles.inputAirportTo}>
+                  <Text style={{ position: 'absolute', bottom: 0 }}>{airportTo}</Text>
+                </View>
+                <View style={styles.btnSearchAirportTo}>
+                  <Button title="Open Modal" onPress={this.openModalToAirport} />
+                </View>
               </View>
-              <View style={styles.btnSearchAirportTo}>
-                <Button title="Open Modal" onPress={this.openModalToAirport} />
+              <View style={{ paddingTop: 10 }}>
+                <View>
+                  <Text>Ngày đi</Text>
+                </View>
+                <View style={styles.inputAirportTo}>
+                  <Text style={{ position: 'absolute', bottom: 0 }}>{dateFrom}</Text>
+                </View>
+                <View style={styles.btnSearchAirportTo}>
+                  <Button title="Open Modal" onPress={this.showDatePicker} />
+                </View>
               </View>
+              {stylePlane === 2 && (
+                <View style={{ paddingTop: 10 }}>
+                  <View>
+                    <Text>Ngày về</Text>
+                  </View>
+                  <View style={styles.inputAirportTo}>
+                    <Text style={{ position: 'absolute', bottom: 0 }}>{dateTo}</Text>
+                  </View>
+                  <View style={styles.btnSearchAirportTo}>
+                    <Button title="Open Modal" onPress={() => this.showDatePickerTo()} />
+                  </View>
+                </View>
+              )}
             </View>
-          </View>
 
-          <ModalSelectList
-            ref={this.saveModalRef}
-            closeButtonText={'Đóng'}
-            options={airPort.map((air, index) => {
-              return {
-                label: air.TenSanBay,
-                value: air.MaSanBay,
-              };
-            })}
-            onSelectedOption={this.onSelectedFrom}
-            disableTextSearch={false}
-          />
-          <ModalSelectList
-            ref={this.saveModalRefTo}
-            closeButtonText={'Đóng'}
-            options={airPort.map((air, index) => {
-              return {
-                label: air.TenSanBay,
-                value: air.MaSanBay,
-              };
-            })}
-            onSelectedOption={this.onSelectedTo}
-            disableTextSearch={false}
-          />
-        </View>
+            <ModalSelectList
+              ref={this.saveModalRef}
+              closeButtonText={'Đóng'}
+              options={airPort.map((air, index) => {
+                return {
+                  label: air.TenSanBay,
+                  value: air.MaSanBay,
+                };
+              })}
+              onSelectedOption={this.onSelectedFrom}
+              disableTextSearch={false}
+            />
+            <ModalSelectList
+              ref={this.saveModalRefTo}
+              closeButtonText={'Đóng'}
+              options={airPort.map((air, index) => {
+                return {
+                  label: air.TenSanBay,
+                  value: air.MaSanBay,
+                };
+              })}
+              onSelectedOption={this.onSelectedTo}
+              disableTextSearch={false}
+            />
+            <DateTimePickerModal
+              isVisible={isDatePickerVisibleFrom}
+              mode="date"
+              onConfirm={this.handleConfirm}
+              onCancel={this.hideDatePicker}
+            />
+            <DateTimePickerModal
+              isVisible={isDatePickerVisibleTo}
+              mode="date"
+              onConfirm={this.handleConfirmTo}
+              onCancel={this.hideDatePickerTo}
+            />
+          </View>
+        </ImageBackground>
       </ScrollView>
     );
   }
@@ -103,11 +211,21 @@ class BookTicket extends Component {
 const styles = StyleSheet.create({
   formSearchAirport: {
     width: DEVICE_WIDTH - 25,
-    height: DEVICE_HEIGHT / 3,
-    backgroundColor: '#E6E6E6',
+    height: DEVICE_HEIGHT / 2.5 + 10,
+    backgroundColor: 'white',
     margin: 15,
     padding: 10,
     borderRadius: 10,
+  },
+  btnStylePlane: {
+    marginTop: 15,
+    marginLeft: 15,
+    marginRight: 15,
+    flexDirection: 'row',
+  },
+  btnChange: {
+    width: '50%',
+    borderRadius: 20,
   },
   inputAirportFrom: {
     width: '90%',
@@ -127,13 +245,19 @@ const styles = StyleSheet.create({
     top: 13,
     width: '90%',
   },
-  btnSearchAirportTo:{
+  btnSearchAirportTo: {
     opacity: 0,
     position: 'absolute',
     top: 22,
     //left: 10,
     width: '90%',
-  }
+  },
+  imageBackground: {
+    flex: 1,
+    resizeMode: 'cover',
+    justifyContent: 'center',
+    height: '30%',
+  },
 });
 const mapStateToProps = (state) => {
   return {
