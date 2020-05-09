@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Image, Button } from 'react-native';
+import { View, Text, StyleSheet, Image, Button, TouchableHighlight } from 'react-native';
 import { Content } from 'native-base';
 import ImageCarosel from './imageCarosel';
 import ImageCaroselBottom from './imageCaroselBottom';
@@ -28,17 +28,16 @@ class ContentBookTicket extends Component {
         </View>
         <ImageCarosel images={images} />
         <View style={styles.viewbtnBookTicket}>
-          <Button
-            title="Đặt chuyến bay"
-            onPress={() => {
-              this.props.navigation.navigate('BookTicket');
-            }}
-          />
+          <TouchableHighlight style={styles.submit} onPress={() => this.props.navigation.navigate('BookTicket')} underlayColor="#fff">
+            <Text style={styles.submitText}>Đặt chuyến bay</Text>
+          </TouchableHighlight>
         </View>
         <View style={styles.viewbtnBookTicket}>
-          <Button title="Đăng kí/Đăng nhập" />
+          <TouchableHighlight style={styles.submit} onPress={() => this.props.navigation.navigate('BookTicket')} underlayColor="#fff">
+            <Text style={styles.submitText}>Đăng nhập/Đăng kí</Text>
+          </TouchableHighlight>
         </View>
-        <ImageCaroselBottom images={images}/>
+        <ImageCaroselBottom images={images} />
       </Content>
     );
   }
@@ -61,6 +60,20 @@ const styles = StyleSheet.create({
   },
   viewbtnBookTicket: {
     marginTop: 15,
+  },
+  submit: {
+    width: '100%',
+  },
+  submitText: {
+    paddingTop: 11,
+    paddingBottom: 11,
+    color: '#fff',
+    textAlign: 'center',
+    backgroundColor: '#68a0cf',
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: '#013ADF',
+    backgroundColor: '#013ADF',
   },
 });
 export default ContentBookTicket;
