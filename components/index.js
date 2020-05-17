@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator} from '@react-navigation/stack';
+import { createStackNavigator } from '@react-navigation/stack';
 import MainBookTicket from './main/index';
 import BookTicket from './bookticket/index';
+import ChooseTicket from './chooseTicket/index';
 const Stack = createStackNavigator();
 class Index extends Component {
   constructor(props) {
@@ -19,10 +20,11 @@ class Index extends Component {
             component={MainBookTicket}
             options={{
               title: '',
-              headerShown:false
+              headerShown: false,
             }}
           />
           <Stack.Screen name="BookTicket" component={BookTicket} />
+          <Stack.Screen name="ChooseTicket" component={ChooseTicket} />
         </Stack.Navigator>
       </NavigationContainer>
     );

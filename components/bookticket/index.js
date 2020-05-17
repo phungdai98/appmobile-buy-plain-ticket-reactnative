@@ -135,7 +135,8 @@ class BookTicket extends Component {
     stylePlane,
     countAdult
   }=this.state;
-  Alert.alert("tu " + airportFrom+" den "+airportTo+ "\n" +"Ngay di " + dateFrom);
+  this.props.navigation.navigate('ChooseTicket');
+  //Alert.alert("tu " + airportFrom+" den "+airportTo+ "\n" +"Ngay di " + dateFrom);
   }
   componentDidMount() {
     this.props.fetAllAirport();
