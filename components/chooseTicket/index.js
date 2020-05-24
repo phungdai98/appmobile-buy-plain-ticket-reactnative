@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Icon } from 'native-base';
-import { ActivityIndicator, StyleSheet, Text, View, ScrollView, Image, FlatList } from 'react-native';
+import callApi from './../../util/apiCaller';
+import { ActivityIndicator,Alert, StyleSheet, Text, View, ScrollView, Image, FlatList } from 'react-native';
 const imageUrlLogo = {
   uri: 'https://res-4.cloudinary.com/crunchbase-production/image/upload/c_lpad,h_256,w_256,f_auto,q_auto:eco/ht6n5o1jcyl4vurt0skc',
 };
@@ -43,7 +44,26 @@ class ChooseTicket extends Component {
           price: '3600000',
         },
       ],
+      test:[]
     };
+  }
+  async componentDidMount()
+  {
+    let {
+      airportFrom,
+    airportTo,
+    dateFrom,
+    dateTo,
+    stylePlane,
+    countAdult,
+    
+    }=this.props.route.params;
+    await callApi('GET','http://datvemaybay.somee.com/api/chuyen-bay/get-by-query?ngayDi=17042020&diemDi=HAN&diemDen=VII',null).then(res=>{
+      this.setState({
+        test:res.data
+      },()=>console.log(this.state.test))
+    })
+    //Alert.alert(""+JSON.stringify(test));
   }
   Item = ({ item }) => {
     return (
@@ -157,6 +177,7 @@ class ChooseTicket extends Component {
                 color: 'black',
               }}>
               {item.price}
+              <Text>đ</Text>
             </Text>
           </View>
         </View>
@@ -164,14 +185,16 @@ class ChooseTicket extends Component {
     );
   };
   render() {
+    
     return (
       <>
-        {this.state.listTicket.length <= 0 ? (
+        {this.state.test.length <= 0 ? (
           <View style={[styles.container, styles.horizontal]}>
             <ActivityIndicator size="large" color="#0000ff" />
           </View>
         ) : (
           <ScrollView>
+          <View style={{margin:5,alignContent:'center',alignItems:'center'}}><Text>Danh sách chuyến bay</Text></View>
             <FlatList
               data={this.state.listTicket}
               renderItem={({ item }) => <this.Item item={item} />}

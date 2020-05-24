@@ -20,7 +20,7 @@ const DEVICE_WIDTH = Dimensions.get('window').width;
 const DEVICE_HEIGHT = Dimensions.get('window').height;
 const image = {
   uri:
-    'https://www.vir.com.vn/stores/news_dataimages/nguyenhuong/092019/05/18/in_article/vietnam-airlines-granted-for-direct-flights-to-the-us.jpg',
+    'https://static1.cafeland.vn/cafelandData/upload/tintuc/doanhnhan/2015/01/tuan-02/4inxulpw-1421253775.jpg',
 };
 class BookTicket extends Component {
   constructor(props) {
@@ -36,6 +36,7 @@ class BookTicket extends Component {
       isDatePickerVisibleTo: false,
       stylePlane: 2,
       countAdult: 1,
+     
     };
   }
   openModal = () => this.state.modalRef.show();
@@ -80,7 +81,8 @@ class BookTicket extends Component {
     if (month.length < 2) month = '0' + month;
     if (day.length < 2) day = '0' + day;
 
-    return [year, month, day].join('-');
+    //return [year, month, day].join('-');
+    return [day,month,year].join('-');
   }
   handleConfirm = (date) => {
     this.hideDatePicker();
@@ -135,7 +137,14 @@ class BookTicket extends Component {
     stylePlane,
     countAdult
   }=this.state;
-  this.props.navigation.navigate('ChooseTicket');
+  this.props.navigation.navigate('ChooseTicket',{
+    airportFrom,
+    airportTo,
+    dateFrom,
+    dateTo,
+    stylePlane,
+    countAdult,
+  });
   //Alert.alert("tu " + airportFrom+" den "+airportTo+ "\n" +"Ngay di " + dateFrom);
   }
   componentDidMount() {
@@ -143,6 +152,7 @@ class BookTicket extends Component {
   }
   render() {
     let { airPort } = this.props;
+    console.log(airportTo);
     let { airportFrom, airportTo, isDatePickerVisibleFrom, dateFrom, dateTo, isDatePickerVisibleTo, stylePlane, countAdult } = this.state;
     return (
       <ScrollView>
@@ -354,7 +364,7 @@ const styles = StyleSheet.create({
     flex: 1,
     resizeMode: 'cover',
     justifyContent: 'center',
-    height: '30%',
+    height: '20%',
   },
   buttonSearchTicket: {
     margin:15

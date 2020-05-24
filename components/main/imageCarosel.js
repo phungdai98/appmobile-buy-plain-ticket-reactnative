@@ -21,20 +21,20 @@ class ImageCarosel extends Component {
     });
   };
   componentDidMount = () => {
-    setInterval(() => {
-      this.setState(
-        (prev) => ({
-          selectedIndex: prev.selectedIndex === this.props.images.length - 1 ? 0 : prev.selectedIndex + 1,
-        }),
-        () => {
-          this.scrollRef.current.scrollTo({
-            animated: true,
-            y: 0,
-            x: DEVICE_WIDTH * this.state.selectedIndex,
-          });
-        },
-      );
-    }, 3000);
+    // setInterval(() => {
+    //   this.setState(
+    //     (prev) => ({
+    //       selectedIndex: prev.selectedIndex === this.props.images.length - 1 ? 0 : prev.selectedIndex + 1,
+    //     }),
+    //     () => {
+    //       this.scrollRef.current.scrollTo({
+    //         animated: true,
+    //         y: 0,
+    //         x: DEVICE_WIDTH * this.state.selectedIndex,
+    //       });
+    //     },
+    //   );
+    // }, 3000);
   };
   render() {
     const { images } = this.props;

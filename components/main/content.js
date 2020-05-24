@@ -4,10 +4,10 @@ import { Content } from 'native-base';
 import ImageCarosel from './imageCarosel';
 import ImageCaroselBottom from './imageCaroselBottom';
 const images = [
-  'https://image.freepik.com/free-photo/fried-eggs-drinks-breakfast_23-2147758279.jpg',
-  'https://image.freepik.com/free-photo/indian-masala-egg-omelet_136595-191.jpg',
-  'https://image.freepik.com/free-photo/north-indian-thali-tipical-meal-served-stainless-steel-plate-blue-table_107467-1331.jpg',
-  'https://image.freepik.com/free-photo/national-uzbek-pilaf-with-meat-cast-iron-skillet-wooden-table_127425-8.jpg',
+  "https://znews-photo.zadn.vn/w660/Uploaded/cqxrcajwp/2014_06_29/1.jpg",
+  "https://poliva.vn/wp-content/uploads/2018/08/ho-guom-ha-noi.jpg",
+  "https://data.voh.com.vn//uploads/Image/2016/06/14/193240kinhte140616.jpg",
+  "https://znews-photo.zadn.vn/w660/Uploaded/cqxrcajwp/2014_06_29/1.jpg",
 ];
 class ContentBookTicket extends Component {
   constructor(props) {
