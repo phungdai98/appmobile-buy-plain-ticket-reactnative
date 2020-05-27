@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Icon } from 'native-base';
 import callApi from './../../util/apiCaller';
-import { ActivityIndicator,Alert, StyleSheet, Text, View, ScrollView, Image, FlatList } from 'react-native';
+import {GETPLANE} from './../../constain/config';
+import { ActivityIndicator, Alert, StyleSheet, Text, View, ScrollView, Image, FlatList } from 'react-native';
 const imageUrlLogo = {
   uri: 'https://res-4.cloudinary.com/crunchbase-production/image/upload/c_lpad,h_256,w_256,f_auto,q_auto:eco/ht6n5o1jcyl4vurt0skc',
 };
@@ -9,63 +10,30 @@ class ChooseTicket extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      listTicket: [
-        {
-          id: '0',
-          idAirportFrom: 'SGN',
-          nameFrom: 'Hồ Chí Minh',
-          idChuyenBay: 'VN-236',
-          timeStart: '05:00',
-          idAirportTo: 'HN',
-          nameTo: 'Hà Nội',
-          timeEnd: '07:05',
-          price: '3600000',
-        },
-        {
-          id: '1',
-          idAirportFrom: 'SGN',
-          nameFrom: 'Hồ Chí Minh',
-          idChuyenBay: 'VN-237',
-          timeStart: '06:00',
-          idAirportTo: 'HN',
-          nameTo: 'Hà Nội',
-          timeEnd: '08:05',
-          price: '3600000',
-        },
-        {
-          id: '2',
-          idAirportFrom: 'SGN',
-          nameFrom: 'Hồ Chí Minh',
-          idChuyenBay: 'VN-238',
-          timeStart: '07:00',
-          idAirportTo: 'HN',
-          nameTo: 'Hà Nội',
-          timeEnd: '09:05',
-          price: '3600000',
-        },
-      ],
-      test:[]
+      listTicket: [],
+      test: [],
     };
   }
-  async componentDidMount()
-  {
-    let {
-      airportFrom,
-    airportTo,
-    dateFrom,
-    dateTo,
-    stylePlane,
-    countAdult,
-    
-    }=this.props.route.params;
-    await callApi('GET','http://datvemaybay.somee.com/api/chuyen-bay/get-by-query?ngayDi=17042020&diemDi=HAN&diemDen=VII',null).then(res=>{
-      this.setState({
-        test:res.data
-      },()=>console.log(this.state.test))
-    })
+  async componentDidMount() {
+    let { airportFrom, airportTo, dateFrom, dateTo, stylePlane, countAdult } = this.props.route.params;
+    let temp1=dateFrom.split("-");
+    let dateFromAPI=temp1[0]+""+temp1[1]+temp1[2];
+    let urlPlane=GETPLANE+"?ngayDi="+dateFromAPI+"&diemDi="+airportFrom+"&diemDen="+airportTo;
+    await callApi('GET', urlPlane, null).then(
+      (res) => {
+        this.setState(
+          {
+            listTicket: res.data,
+          },
+          () => console.log(this.state.listTicket),
+        );
+      },
+    );
     //Alert.alert(""+JSON.stringify(test));
   }
   Item = ({ item }) => {
+    let timeFrom=item.gioidi+":"+item.phutdi;
+    let timeTo=item.gioden+":"+item.phutden;
     return (
       <View style={styles.viewListTicket}>
         <View style={styles.childrenViewListTicket}>
@@ -87,7 +55,7 @@ class ChooseTicket extends Component {
                 color: 'grey',
                 fontSize: 12,
               }}>
-              {item.idChuyenBay}
+              {item.macb}
             </Text>
           </View>
           <View style={styles.addressFrom}>
@@ -100,7 +68,7 @@ class ChooseTicket extends Component {
                 alignItems: 'center',
                 borderRadius: 3,
               }}>
-              <Text style={{ color: 'white' }}>{item.idAirportFrom}</Text>
+              <Text style={{ color: 'white' }}>{item.sbdi.masb}</Text>
             </View>
             <Text
               style={{
@@ -108,14 +76,14 @@ class ChooseTicket extends Component {
                 fontWeight: 'bold',
                 color: '#A4A4A4',
               }}>
-              {item.nameFrom}
+              {item.sbdi.tp}
             </Text>
             <Text
               style={{
-                paddingLeft: 165,
+                paddingLeft: 185,
                 color: 'grey',
               }}>
-              {item.timeStart}
+              {timeFrom}
             </Text>
           </View>
           <View style={styles.addressFrom}>
@@ -145,7 +113,7 @@ class ChooseTicket extends Component {
                 alignItems: 'center',
                 borderRadius: 3,
               }}>
-              <Text style={{ color: 'white' }}>{item.idAirportTo}</Text>
+              <Text style={{ color: 'white' }}>{item.sbden.masb}</Text>
             </View>
             <Text
               style={{
@@ -153,14 +121,14 @@ class ChooseTicket extends Component {
                 fontWeight: 'bold',
                 color: '#A4A4A4',
               }}>
-              {item.nameTo}
+              {item.sbden.tp}
             </Text>
             <Text
               style={{
                 paddingLeft: 202,
                 color: 'grey',
               }}>
-              {item.timeEnd}
+              {timeTo}
             </Text>
           </View>
           <View style={styles.priceTicket}>
@@ -176,7 +144,7 @@ class ChooseTicket extends Component {
                 fontWeight: 'bold',
                 color: 'black',
               }}>
-              {item.price}
+              {item.giave}
               <Text>đ</Text>
             </Text>
           </View>
@@ -185,16 +153,19 @@ class ChooseTicket extends Component {
     );
   };
   render() {
-    
+    let {stylePlane}=this.props.route.params;
+    //console.log("hht là:",stylePlane);
     return (
       <>
-        {this.state.test.length <= 0 ? (
+        {this.state.listTicket.length <= 0 ? (
           <View style={[styles.container, styles.horizontal]}>
             <ActivityIndicator size="large" color="#0000ff" />
           </View>
         ) : (
           <ScrollView>
-          <View style={{margin:5,alignContent:'center',alignItems:'center'}}><Text>Danh sách chuyến bay</Text></View>
+            <View style={{ margin: 5, alignContent: 'center', alignItems: 'center' }}>
+              <Text>{stylePlane===2?"Chọn chiều đi":"Chọn chuyến bay"}</Text>
+            </View>
             <FlatList
               data={this.state.listTicket}
               renderItem={({ item }) => <this.Item item={item} />}
@@ -245,4 +216,5 @@ const styles = StyleSheet.create({
     padding: 10,
   },
 });
+
 export default ChooseTicket;

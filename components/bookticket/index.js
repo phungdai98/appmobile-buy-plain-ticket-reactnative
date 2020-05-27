@@ -220,8 +220,8 @@ class BookTicket extends Component {
               closeButtonText={'Đóng'}
               options={airPort.map((air, index) => {
                 return {
-                  label: air.TenSanBay,
-                  value: air.MaSanBay,
+                  label: air.tensb,
+                  value: air.masb,
                 };
               })}
               onSelectedOption={this.onSelectedFrom}
@@ -232,8 +232,8 @@ class BookTicket extends Component {
               closeButtonText={'Đóng'}
               options={airPort.map((air, index) => {
                 return {
-                  label: air.TenSanBay,
-                  value: air.MaSanBay,
+                  label: air.tensb,
+                  value: air.masb,
                 };
               })}
               onSelectedOption={this.onSelectedTo}
