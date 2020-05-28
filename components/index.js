@@ -5,6 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import MainBookTicket from './main/index';
 import BookTicket from './bookticket/index';
 import ChooseTicket from './chooseTicket/index';
+import CheckinOnline from './checkin-online/index';
 const Stack = createStackNavigator();
 class Index extends Component {
   constructor(props) {
@@ -23,8 +24,26 @@ class Index extends Component {
               headerShown: false,
             }}
           />
-          <Stack.Screen name="BookTicket" component={BookTicket} />
-          <Stack.Screen name="ChooseTicket" component={ChooseTicket} />
+          <Stack.Screen name="BookTicket" component={BookTicket} options={{
+            title: 'Đặt vé',
+            headerTintColor: 'blue',
+          }} />
+          <Stack.Screen
+            name="ChooseTicket"
+            component={ChooseTicket}
+            options={{
+              title: 'Chọn chuyến bay',
+              headerTintColor: 'blue',
+            }}
+          />
+          <Stack.Screen
+            name="Checkin"
+            component={CheckinOnline}
+            options={{
+              title: 'Đặt chỗ của tôi',
+              headerTintColor: 'blue',
+            }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     );

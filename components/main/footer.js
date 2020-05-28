@@ -20,7 +20,7 @@ class FooterBookTicket extends Component {
             <Icon style={styles.colorIcon} name="md-jet" />
             <Text style={styles.titleIcon}>Đặt vé</Text>
           </Button>
-          <Button>
+          <Button onPress={()=>{this.props.navigation.navigate('Checkin')}}>
             <Icon style={styles.colorIcon} name="md-desktop" />
             <Text style={styles.titleIcon}>Lotusmiles</Text>
           </Button>

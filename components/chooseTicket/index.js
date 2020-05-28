@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Icon } from 'native-base';
 import callApi from './../../util/apiCaller';
-import {GETPLANE} from './../../constain/config';
+import { GETPLANE } from './../../constain/config';
 import { ActivityIndicator, Alert, StyleSheet, Text, View, ScrollView, Image, FlatList } from 'react-native';
 const imageUrlLogo = {
   uri: 'https://res-4.cloudinary.com/crunchbase-production/image/upload/c_lpad,h_256,w_256,f_auto,q_auto:eco/ht6n5o1jcyl4vurt0skc',
@@ -16,24 +16,22 @@ class ChooseTicket extends Component {
   }
   async componentDidMount() {
     let { airportFrom, airportTo, dateFrom, dateTo, stylePlane, countAdult } = this.props.route.params;
-    let temp1=dateFrom.split("-");
-    let dateFromAPI=temp1[0]+""+temp1[1]+temp1[2];
-    let urlPlane=GETPLANE+"?ngayDi="+dateFromAPI+"&diemDi="+airportFrom+"&diemDen="+airportTo;
-    await callApi('GET', urlPlane, null).then(
-      (res) => {
-        this.setState(
-          {
-            listTicket: res.data,
-          },
-          () => console.log(this.state.listTicket),
-        );
-      },
-    );
+    let temp1 = dateFrom.split('-');
+    let dateFromAPI = temp1[0] + '' + temp1[1] + temp1[2];
+    let urlPlane = GETPLANE + '?ngayDi=' + dateFromAPI + '&diemDi=' + airportFrom + '&diemDen=' + airportTo;
+    await callApi('GET', urlPlane, null).then((res) => {
+      this.setState(
+        {
+          listTicket: res.data,
+        },
+        () => console.log(this.state.listTicket),
+      );
+    });
     //Alert.alert(""+JSON.stringify(test));
   }
   Item = ({ item }) => {
-    let timeFrom=item.gioidi+":"+item.phutdi;
-    let timeTo=item.gioden+":"+item.phutden;
+    let timeFrom = item.gioidi + ':' + item.phutdi;
+    let timeTo = item.gioden + ':' + item.phutden;
     return (
       <View style={styles.viewListTicket}>
         <View style={styles.childrenViewListTicket}>
@@ -153,7 +151,7 @@ class ChooseTicket extends Component {
     );
   };
   render() {
-    let {stylePlane}=this.props.route.params;
+    let { stylePlane } = this.props.route.params;
     //console.log("hht là:",stylePlane);
     return (
       <>
@@ -164,7 +162,7 @@ class ChooseTicket extends Component {
         ) : (
           <ScrollView>
             <View style={{ margin: 5, alignContent: 'center', alignItems: 'center' }}>
-              <Text>{stylePlane===2?"Chọn chiều đi":"Chọn chuyến bay"}</Text>
+              
             </View>
             <FlatList
               data={this.state.listTicket}
@@ -196,7 +194,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 50,
     borderTopWidth: 1,
-    borderColor: 'grey',
+    borderColor: '#BDBDBD',
     marginTop: 15,
     paddingTop: 12,
   },
