@@ -4,9 +4,18 @@ import { View, Text, TextInput, TouchableHighlight, StyleSheet } from 'react-nat
 class SearchIDPlane extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      maDatCho:'',
+      email:''
+    };
   }
-
+  onSearchMaDatCho=()=>{
+    let {maDatCho,email}=this.state;
+    this.props.navigation.navigate('InformationPlane',{
+      maDatCho,
+      email
+    })
+  }
   render() {
     return (
       <View>
@@ -15,14 +24,18 @@ class SearchIDPlane extends Component {
         </View>
         <View style={{ margin: 15 }}>
           <Text style={{color:'#0040FF'}}>Mã đặt chỗ</Text>
-          <TextInput style={{ height: 35, borderColor: '#0040FF', borderWidth: 1, marginTop: 3 }} />
+          <TextInput onChangeText={id=>this.setState({
+            maDatCho:id
+          })} style={{ height: 35, borderColor: '#0040FF', borderWidth: 1, marginTop: 3 }} />
         </View>
         <View style={{ marginTop: 20, margin: 15 }}>
           <Text style={{color:'#0040FF'}}>Email của bạn</Text>
-          <TextInput style={{ height: 35, borderColor: '#0040FF', borderWidth: 1, marginTop: 3 }} />
+          <TextInput onChangeText={email=>this.setState({
+            email:email
+          })} style={{ height: 35, borderColor: '#0040FF', borderWidth: 1, marginTop: 3 }} />
         </View>
         <View style={{ marginTop: 20, margin: 15 }}>
-          <TouchableHighlight style={styles.submit} underlayColor="#fff">
+          <TouchableHighlight style={styles.submit} onPress={this.onSearchMaDatCho} underlayColor="#fff">
             <Text style={styles.submitText}>Quản lí đặt chỗ</Text>
           </TouchableHighlight>
         </View>

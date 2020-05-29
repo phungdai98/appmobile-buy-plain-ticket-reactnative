@@ -6,6 +6,7 @@ import MainBookTicket from './main/index';
 import BookTicket from './bookticket/index';
 import ChooseTicket from './chooseTicket/index';
 import SearchIDPlane from './search-id/index';
+import InformationPlane from './information-plane-of-you/index';
 const Stack = createStackNavigator();
 class Index extends Component {
   constructor(props) {
@@ -41,6 +42,14 @@ class Index extends Component {
             component={SearchIDPlane}
             options={{
               title: 'Đặt chỗ của tôi',
+              headerTintColor: 'blue',
+            }}
+          />
+          <Stack.Screen
+            name="InformationPlane"
+            component={InformationPlane}
+            options={{
+              title: 'Thông tin chuyến bay của bạn',
               headerTintColor: 'blue',
             }}
           />
