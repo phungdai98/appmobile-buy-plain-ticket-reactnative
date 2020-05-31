@@ -5,10 +5,18 @@ class InputInforCustomer extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      cmnd:'',
+      ho:'',
+      ten:'',
+      sdt:'',
       gender: '1',
+      email:''
     };
   }
-
+componentDidMount(){
+  let chuyenbay=this.props.route.params;
+  console.log(chuyenbay);
+}
   render() {
     return (
       <View style={{ margin: 15 }}>
@@ -49,7 +57,7 @@ class InputInforCustomer extends Component {
           <TextInput style={{ height: 35, borderColor: '#0040FF', borderBottomWidth: 1.5, marginTop: 3 }} />
         </View>
         <View style={{ marginTop: 50 }}>
-          <TouchableHighlight style={styles.submit} onPress={this.onSearchMaDatCho} underlayColor="#fff">
+          <TouchableHighlight style={styles.submit} underlayColor="#fff">
             <Text style={styles.submitText}>Đi tới thanh toán</Text>
           </TouchableHighlight>
         </View>

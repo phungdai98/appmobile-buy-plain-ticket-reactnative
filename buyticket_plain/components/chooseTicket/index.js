@@ -20,15 +20,17 @@ class ChooseTicket extends Component {
     let dateFromAPI = temp1[0] + '' + temp1[1] + temp1[2];
     let urlPlane = GETPLANE + '/' + dateFromAPI + '/' + airportFrom + '/' + airportTo;
     await callApi('GET', urlPlane, null).then((res) => {
-      console.log(res);
+      //console.log(res);
       this.setState({
         listTicket: res.data,
       });
     });
     //Alert.alert(""+JSON.stringify(test));
   }
-  inputInfor=(macb)=>{
-    this.props.navigation.navigate('Inforcustomer');
+  inputInfor=(chuyenbay)=>{
+    this.props.navigation.navigate('Inforcustomer',{
+      chuyenbay
+    });
   }
   Item = ({ item }) => {
     return (
@@ -141,7 +143,7 @@ class ChooseTicket extends Component {
                 fontWeight: 'bold',
                 color: 'black',
               }}
-              onPress={()=>this.inputInfor(item.MaChuyenBay)}
+              onPress={()=>this.inputInfor(item)}
               >
               {item.GiaVe}
               <Text>đ</Text>
