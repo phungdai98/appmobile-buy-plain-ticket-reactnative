@@ -29,7 +29,7 @@ class FooterBookTicket extends Component {
             <Text style={styles.titleIcon}>Làm thủ tục</Text>
           </Button>
           <Button>
-            <Icon style={styles.colorIcon} name="md-apps" onPress={()=>{this.props.navigation.navigate('Inforcustomer')}} />
+            <Icon style={styles.colorIcon} name="md-apps" onPress={()=>{this.props.navigation.navigate('acceptBooking')}} />
             <Text style={styles.titleIcon}>Chức năng khác</Text>
           </Button>
         </FooterTab>

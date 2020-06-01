@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { View, Text, TextInput, Picker, StyleSheet,TouchableHighlight } from 'react-native';
-
+import callApi from './../../util/apiCaller';
+import {ACCEPTBOOKING} from './../../constain/config';
 class InputInforCustomer extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      macb:'',
       cmnd:'',
       ho:'',
       ten:'',
@@ -15,22 +17,46 @@ class InputInforCustomer extends Component {
   }
 componentDidMount(){
   let chuyenbay=this.props.route.params;
-  console.log(chuyenbay);
+  //console.log("macb:",chuyenbay.chuyenbay.MaChuyenBay);
+  this.setState({
+    macb:chuyenbay.chuyenbay.MaChuyenBay
+  })
+}
+onAccept= async ()=>{
+  //console.log(this.state);
+  let params={
+    "email":this.state.email
+  }
+  await callApi("POST",ACCEPTBOOKING,params).then(res=>{
+    this.props.navigation.navigate('acceptBooking');
+  })
 }
   render() {
     return (
       <View style={{ margin: 15 }}>
         <View style={{ marginTop: 10 }}>
           <Text style={{ color: '#0040FF' }}>Chứng minh ND</Text>
-          <TextInput style={{ height: 35, borderColor: '#0040FF', borderBottomWidth: 1, marginTop: 3 }} />
+          <TextInput style={{ height: 35, borderColor: '#0040FF', borderBottomWidth: 1, marginTop: 3 }} onChangeText={
+            (cmnd)=>this.setState({
+              cmnd:cmnd
+            })
+          } />
         </View>
         <View style={{ marginTop: 10 }}>
           <Text style={{ color: '#0040FF' }}>Họ</Text>
-          <TextInput style={{ height: 35, borderColor: '#0040FF', borderBottomWidth: 1, marginTop: 3 }} />
+          <TextInput style={{ height: 35, borderColor: '#0040FF', borderBottomWidth: 1, marginTop: 3 }} onChangeText={
+            (ho)=>this.setState({
+              ho:ho
+            })
+          } />
         </View>
         <View style={{ marginTop: 10 }}>
           <Text style={{ color: '#0040FF' }}>Tên</Text>
-          <TextInput style={{ height: 35, borderColor: '#0040FF', borderBottomWidth: 1, marginTop: 3 }} />
+          <TextInput style={{ height: 35, borderColor: '#0040FF', borderBottomWidth: 1, marginTop: 3 }} onChangeText={
+            (ten)=>this.setState({
+              ten:ten
+            })
+          } />
         </View>
         <View style={{ marginTop: 10 }}>
           <Text style={{ color: '#0040FF' }}>Giới tính</Text>
@@ -50,14 +76,22 @@ componentDidMount(){
         </View>
         <View style={{ marginTop: 10 }}>
           <Text style={{ color: '#0040FF' }}>Điện thoại liên hệ</Text>
-          <TextInput style={{ height: 35, borderColor: '#0040FF', borderBottomWidth: 1, marginTop: 3 }} />
+          <TextInput style={{ height: 35, borderColor: '#0040FF', borderBottomWidth: 1, marginTop: 3 }} onChangeText={
+            (sdt)=>this.setState({
+              sdt:sdt
+            })
+          } />
         </View>
         <View style={{ marginTop: 10 }}>
           <Text style={{ color: '#0040FF' }}>Email</Text>
-          <TextInput style={{ height: 35, borderColor: '#0040FF', borderBottomWidth: 1.5, marginTop: 3 }} />
+          <TextInput style={{ height: 35, borderColor: '#0040FF', borderBottomWidth: 1.5, marginTop: 3 }} onChangeText={
+            (email)=>this.setState({
+              email:email
+            })
+          } />
         </View>
         <View style={{ marginTop: 50 }}>
-          <TouchableHighlight style={styles.submit} underlayColor="#fff">
+          <TouchableHighlight style={styles.submit} onPress={this.onAccept} underlayColor="#fff">
             <Text style={styles.submitText}>Đi tới thanh toán</Text>
           </TouchableHighlight>
         </View>

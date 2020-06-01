@@ -8,6 +8,7 @@ import ChooseTicket from './chooseTicket/index';
 import SearchIDPlane from './search-id/index';
 import InformationPlane from './information-plane-of-you/index';
 import InputInforCustomer from './../components/infor-customer/index';
+import AcceptBooking from './../components/accept-booking/index';
 const Stack = createStackNavigator();
 class Index extends Component {
   constructor(props) {
@@ -59,6 +60,14 @@ class Index extends Component {
             component={InputInforCustomer}
             options={{
               title: 'Thông tin hành khách',
+              headerTintColor: 'blue',
+            }}
+          />
+          <Stack.Screen
+            name="acceptBooking"
+            component={AcceptBooking}
+            options={{
+              title: 'Xác nhận đặt vé',
               headerTintColor: 'blue',
             }}
           />
