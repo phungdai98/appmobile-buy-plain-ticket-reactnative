@@ -24,11 +24,14 @@ componentDidMount(){
 }
 onAccept= async ()=>{
   //console.log(this.state);
+  let inforBooking=this.state;
   let params={
     "email":this.state.email
   }
   await callApi("POST",ACCEPTBOOKING,params).then(res=>{
-    this.props.navigation.navigate('acceptBooking');
+    this.props.navigation.navigate('acceptBooking',{
+      inforBooking
+    });
   })
 }
   render() {

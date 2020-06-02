@@ -4,7 +4,18 @@ const mysql = require("mysql");
 var cors = require("cors");
 var nodemailer = require("nodemailer");
 const bodyParser = require("body-parser");
-const maxacnhan=["mhks","lmpq","abca"];
+const maxacnhan = [
+  "abc",
+  "bca",
+  "chg",
+  "djh",
+  "eqa",
+  "fcd",
+  "ghj",
+  "hae",
+  "iee",
+  "jrt"
+];
 app.use(cors());
 app.use(bodyParser.json());
 
@@ -86,108 +97,116 @@ app.get("/api/chuyen-bay/get-by-query/:ngayDi/:diemDi/:diemDen", (req, res) => {
   );
   //console.log(data)
 });
-app.post("/api/chuyen-bay/xacnhan",(req,res)=>{
-  let params=req.body;
+app.post("/api/chuyen-bay/xacnhan", (req, res) => {
+  let params = req.body;
+  let index = Math.floor(Math.random() * 10);
   var mail = {
     from: "mailsenderptithcm@gmail.com", // Địa chỉ email của người gửi
     to: params.email, // Địa chỉ email của người gửi
     subject: "VIETNAM ALINE", // Tiêu đề mail
-    text:
-      "Mã xác nhận của quý khách là " +
-      maxacnhan[0], // Nội dung mail dạng text
+    text: "Mã xác nhận của quý khách là " + maxacnhan[index], // Nội dung mail dạng text
   };
   transporter.sendMail(mail, function (error, info) {
     if (error) {
       // nếu có lỗi
       console.log(error);
       res.json({
-        notice:"fail"
-      })
+        notice: "fail",
+      });
     } else {
       //nếu thành công
       console.log("Email sent: " + info.response);
       res.json({
-        notice:"success"
-      })
+        notice: "success",
+      });
     }
   });
-})
+});
 //đặt vé
 app.post("/api/chuyen-bay/datve", (req, res) => {
   let params = req.body;
-  let sql =
-    "SELECT * FROM ticketplane.ve where chuyenbay_MaChuyenBay=? and TrangThai=0";
-  mysqlConnection.query(sql, [params.macb], (err, rows, fields) => {
-    if (!err) {
-      let sqlInsertVe =
-        "INSERT INTO customers(Cmnd,Ho,Ten,SDT,GioiTinh,Email) VALUES(" +
-        params.cmnd +
-        ",'" +
-        params.ho +
-        "','" +
-        params.ten +
-        "'," +
-        params.sdt +
-        "," +
-        params.gioitinh +
-        ",'" +
-        params.email +
-        "') ; " +
-        "\n" +
-        "INSERT INTO ctdatve(trangthai,customers_Cmnd,ve_MaVe) VALUES(1," +
-        params.cmnd +
-        ",'" +
-        rows[0].MaVe +
-        "') ; " +
-        "\n" +
-        "UPDATE ve SET TrangThai=1 WHERE MaVe='" +
-        rows[0].MaVe +
-        "'";
-      console.log(sqlInsertVe);
-      mysqlConnection.query(sqlInsertVe, (err1, rows1, fields) => {
-        if (!err1) {
-          res.json({
-            status: "success",
-          });
-          let sqlMaDatCho =
-            "SELECT * FROM ticketplane.ctdatve where customers_Cmnd=" +
-            params.cmnd +
-            " and ve_MaVe='" +
-            rows[0].MaVe +
-            "';";
-          mysqlConnection.query(sqlMaDatCho, (err2, rows2, fields) => {
-            if (!err2) {
-              var mail = {
-                from: "mailsenderptithcm@gmail.com", // Địa chỉ email của người gửi
-                to: params.email, // Địa chỉ email của người gửi
-                subject: "VIETNAM ALINE", // Tiêu đề mail
-                text:
-                  "Đạt vé máy bay thành công mã đặt chỗ của quý khách là " +
-                  rows2[0].idctdatve, // Nội dung mail dạng text
-              };
-              transporter.sendMail(mail, function (error, info) {
-                if (error) {
-                  // nếu có lỗi
-                  console.log(error);
-                } else {
-                  //nếu thành công
-                  console.log("Email sent: " + info.response);
-                }
-              });
-            }
-          });
-        } else {
-          res.json({
-            status: "fail",
-          });
-        }
-      });
-    } else {
-      res.json({
-        notice: "fail",
-      });
-    }
-  });
+  let index = maxacnhan.findIndex((ma) => ma === params.maxacnhan);
+  if (index !== -1) {
+    let sql =
+      "SELECT * FROM ticketplane.ve where chuyenbay_MaChuyenBay=? and TrangThai=0";
+    mysqlConnection.query(sql, [params.macb], (err, rows, fields) => {
+      if (!err) {
+        let sqlInsertVe =
+          "INSERT INTO customers(Cmnd,Ho,Ten,SDT,GioiTinh,Email) VALUES(" +
+          params.cmnd +
+          ",'" +
+          params.ho +
+          "','" +
+          params.ten +
+          "'," +
+          params.sdt +
+          "," +
+          params.gioitinh +
+          ",'" +
+          params.email +
+          "') ; " +
+          "\n" +
+          "INSERT INTO ctdatve(trangthai,customers_Cmnd,ve_MaVe) VALUES(1," +
+          params.cmnd +
+          ",'" +
+          rows[0].MaVe +
+          "') ; " +
+          "\n" +
+          "UPDATE ve SET TrangThai=1 WHERE MaVe='" +
+          rows[0].MaVe +
+          "'";
+        console.log(sqlInsertVe);
+        mysqlConnection.query(sqlInsertVe, (err1, rows1, fields) => {
+          if (!err1) {
+            res.json({
+              status: "success",
+            });
+            let sqlMaDatCho =
+              "SELECT * FROM ticketplane.ctdatve where customers_Cmnd=" +
+              params.cmnd +
+              " and ve_MaVe='" +
+              rows[0].MaVe +
+              "';";
+            mysqlConnection.query(sqlMaDatCho, (err2, rows2, fields) => {
+              if (!err2) {
+                var mail = {
+                  from: "mailsenderptithcm@gmail.com", // Địa chỉ email của người gửi
+                  to: params.email, // Địa chỉ email của người gửi
+                  subject: "VIETNAM ALINE", // Tiêu đề mail
+                  text:
+                    "Đạt vé máy bay thành công mã đặt chỗ của quý khách là " +
+                    rows2[0].idctdatve, // Nội dung mail dạng text
+                };
+                transporter.sendMail(mail, function (error, info) {
+                  if (error) {
+                    // nếu có lỗi
+                    console.log(error);
+                  } else {
+                    //nếu thành công
+                    console.log("Email sent: " + info.response);
+                  }
+                });
+              }
+            });
+          } else {
+            res.json({
+              status: "fail",
+            });
+          }
+        });
+      } else {
+        res.json({
+          notice: "fail",
+        });
+      }
+    });
+  }
+  else if(index===-1) {
+    res.json({
+      notice:"Mã xác nhận không đúng"
+    })
+    console.log("loi mã xn")
+  }
 });
 app.listen(1337, () => {
   console.log("1337");
