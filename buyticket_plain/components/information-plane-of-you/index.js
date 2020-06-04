@@ -11,14 +11,13 @@ class InformationPlane extends Component {
   }
   async componentDidMount() {
     let { maDatCho, email } = this.props.route.params;
-    let url = GETTICKETWITHIDVE + '?mave=' + maDatCho;
-    callApi('GET', url, null).then((res) => {
-      this.setState(
-        {
-          infomation: res.data,
-        },
-        () => console.log(this.state.infomation),
-      );
+    let params = {
+      maDatCho: maDatCho,
+    };
+    callApi('POST', GETTICKETWITHIDVE, params).then((res) => {
+      this.setState({
+        infomation: res.data,
+      });
     });
   }
   render() {
@@ -30,11 +29,14 @@ class InformationPlane extends Component {
             <ActivityIndicator size="large" color="#0000ff" />
           </View>
         ) : (
-          <View style={{margin:15}}>
-            <Text>Họ và tên  : {infomation.hoadon.khachhang.ho} {infomation.hoadon.khachhang.ten}</Text>
-            <Text>Chuyến bay : {infomation.chuyenbay.macb}</Text>
-            <Text>Ngày đi    : {infomation.chuyenbay.ngayden}-{infomation.chuyenbay.thangden.length===2?infomation.chuyenbay.thangden:"0"+infomation.chuyenbay.thangden}-{infomation.chuyenbay.namden}</Text>
-            <Text>Số ghế : {infomation.soghe}</Text>
+          <View style={{ margin: 15 }}>
+            <Text>
+              Họ và tên : {infomation[0].Ho} {infomation[0].Ten}
+            </Text>
+            <Text>Chuyến bay : {infomation[0].chuyenbay_MaChuyenBay}</Text>
+            <Text>Ngày đi : {infomation[0].NgayDi}</Text>
+            <Text>Số ghế : {infomation[0].SoGhe}</Text>
+            <Text>Giờ khởi hành : {infomation[0].ThoiGianDiDuKien}</Text>
           </View>
         )}
       </>

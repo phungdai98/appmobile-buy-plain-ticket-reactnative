@@ -14,7 +14,7 @@ const maxacnhan = [
   "ghj",
   "hae",
   "iee",
-  "jrt"
+  "jrt",
 ];
 app.use(cors());
 app.use(bodyParser.json());
@@ -196,17 +196,29 @@ app.post("/api/chuyen-bay/datve", (req, res) => {
         });
       } else {
         res.json({
-          notice: "fail",
+          status: "fail",
         });
       }
     });
-  }
-  else if(index===-1) {
+  } else if (index === -1) {
     res.json({
-      notice:"Mã xác nhận không đúng"
-    })
-    console.log("loi mã xn")
+      status: "Mã xác nhận không đúng",
+    });
+    console.log("loi mã xn");
   }
+});
+//get ma dat cho
+app.post("/api/chuyen-bay/madatcho", (req, res) => {
+  let params = req.body;
+  let sql =
+    "SELECT * FROM ticketplane.ctdatve join ve on ctdatve.ve_MaVe=ve.MaVe join customers on ctdatve.customers_Cmnd=customers.Cmnd join chuyenbay on chuyenbay.MaChuyenBay=ve.chuyenbay_MaChuyenBay join airport on chuyenbay.airport_MaSanBay=airport.MaSanBay join airportto on chuyenbay.airportto_MaSanBayDen=airportto.MaSanBayDen where idctdatve=" +
+    params.maDatCho +
+    ";";
+  mysqlConnection.query(sql, (err, rows, fields) => {
+    if (!err) {
+      res.json(rows);
+    }
+  });
 });
 app.listen(1337, () => {
   console.log("1337");

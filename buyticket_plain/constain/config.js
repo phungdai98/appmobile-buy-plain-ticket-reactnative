@@ -2,6 +2,6 @@
 const API_URL='http://192.168.56.1:1337/api/'
 export const GETALLAIRPORT = API_URL + 'san-bay/get-all';
 export const GETPLANE = API_URL + 'chuyen-bay/get-by-query';
-export const GETTICKETWITHIDVE = API_URL + 've/get-by-id';
+export const GETTICKETWITHIDVE = API_URL + 'chuyen-bay/madatcho';
 export const ACCEPTBOOKING=API_URL+'chuyen-bay/xacnhan';
 export const BOOKED=API_URL+'chuyen-bay/datve';

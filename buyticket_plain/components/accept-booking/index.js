@@ -27,7 +27,7 @@ class AcceptBooking extends Component {
     };
     console.log(params);
     await callApi('POST', BOOKED, params).then((res) => {
-      console.log("trạng thái",res.notice);
+      console.log("trạng thái",res.data.status);
       //Alert.alert("Đặt vé thành công");
     });
   };
