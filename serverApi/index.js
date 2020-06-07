@@ -169,6 +169,7 @@ app.post("/api/chuyen-bay/datve", (req, res) => {
               "';";
             mysqlConnection.query(sqlMaDatCho, (err2, rows2, fields) => {
               if (!err2) {
+                
                 var mail = {
                   from: "mailsenderptithcm@gmail.com", // Địa chỉ email của người gửi
                   to: params.email, // Địa chỉ email của người gửi
@@ -219,7 +220,28 @@ app.post("/api/chuyen-bay/madatcho", (req, res) => {
       res.json(rows);
     }
   });
-});
+});//them chuyen bay
+app.post("/api/chuyen-bay/them",(req,res)=>{
+  let emp=req.body;
+  let sql="INSERT INTO ticketplane.chuyenbay (MaChuyenBay, TrangThai, NgayDi, ThoiGianDiDuKien, ThoiGianDenDuKien, plane_MaMayBay, airport_MaSanBay, airportto_MaSanBayDen, GiaVe) VALUES(?,?,?,?,?,?,?,?,?)";
+  mysqlConnection.query(sql,[emp.MaChuyenBay,emp.TrangThai,emp.NgayDi,emp.ThoiGianDiDuKien,emp.ThoiGianDenDuKien,emp.plane_MaMayBay,emp.airport_MaSanBay,emp.airportto_MaSanBayDen,emp.GiaVe],(err,rows,fields)=>{
+    if(!err)
+    {
+      let sql="INSERT INTO ticketplane.ve (MaVe, SoGhe, TrangThai, chuyenbay_MaChuyenBay) VALUES (?, ?, ?, ?);";
+      for(let i=1;i<=50;i++)
+      {
+        mysqlConnection.query(sql,["VN4000"+i,"A"+i,0,emp.MaChuyenBay],(err1,rows1,fields1)=>{
+          if(!err1)
+          {
+            res.json({
+              notice:"success"
+            })
+          }
+        })
+      }
+    }
+  })
+})
 app.listen(1337, () => {
   console.log("1337");
 });

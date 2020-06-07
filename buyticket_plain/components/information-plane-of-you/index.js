@@ -34,9 +34,12 @@ class InformationPlane extends Component {
               Họ và tên : {infomation[0].Ho} {infomation[0].Ten}
             </Text>
             <Text>Chuyến bay : {infomation[0].chuyenbay_MaChuyenBay}</Text>
+            <Text>Từ : {infomation[0].ThanhPho}</Text>
+            <Text>Đến : {infomation[0].ThanhPhoDen}</Text>
             <Text>Ngày đi : {infomation[0].NgayDi}</Text>
             <Text>Số ghế : {infomation[0].SoGhe}</Text>
             <Text>Giờ khởi hành : {infomation[0].ThoiGianDiDuKien}</Text>
+            <Text>Quý khách vui lòng có mặt tại sân bay trước giờ khởi hành 2 tiếng để làm các thủ tục cần thiết</Text>
           </View>
         )}
       </>

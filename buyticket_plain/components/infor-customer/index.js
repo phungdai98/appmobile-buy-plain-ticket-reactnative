@@ -12,7 +12,7 @@ class InputInforCustomer extends Component {
       ten:'',
       sdt:'',
       gender: '1',
-      email:''
+      email:'phungdai16061998@gmail.com'
     };
   }
 componentDidMount(){
@@ -87,7 +87,7 @@ onAccept= async ()=>{
         </View>
         <View style={{ marginTop: 10 }}>
           <Text style={{ color: '#0040FF' }}>Email</Text>
-          <TextInput style={{ height: 35, borderColor: '#0040FF', borderBottomWidth: 1.5, marginTop: 3 }} onChangeText={
+          <TextInput style={{ height: 35, borderColor: '#0040FF', borderBottomWidth: 1.5, marginTop: 3 }} value={this.state.email} onChangeText={
             (email)=>this.setState({
               email:email
             })

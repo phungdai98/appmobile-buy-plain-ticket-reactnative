@@ -6,7 +6,7 @@ class SearchIDPlane extends Component {
     super(props);
     this.state = {
       maDatCho:'',
-      email:''
+      email:'@'
     };
   }
   onSearchMaDatCho=()=>{
@@ -30,7 +30,7 @@ class SearchIDPlane extends Component {
         </View>
         <View style={{ marginTop: 20, margin: 15 }}>
           <Text style={{color:'#0040FF'}}>Email của bạn</Text>
-          <TextInput onChangeText={email=>this.setState({
+          <TextInput value={this.state.email} onChangeText={email=>this.setState({
             email:email
           })} style={{ height: 35, borderColor: '#0040FF', borderWidth: 1, marginTop: 3 }} />
         </View>

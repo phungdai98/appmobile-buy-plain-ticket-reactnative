@@ -1124,6 +1124,13 @@
   resolved "https://registry.yarnpkg.com/@react-native-community/masked-view/-/masked-view-0.1.10.tgz#5dda643e19e587793bc2034dd9bf7398ad43d401"
   integrity sha512-rk4sWFsmtOw8oyx8SD3KSvawwaK7gRBSEIy2TAwURyGt+3TizssXP1r8nx3zY+R7v2vYYHXZ+k2/GULAT/bcaQ==
 
+"@react-native-community/push-notification-ios@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@react-native-community/push-notification-ios/-/push-notification-ios-1.2.0.tgz#3353598450a39c42d079603aad2d1c0f9c2c1729"
+  integrity sha512-B5qPb9P/6vvxGGQDePlK/q6NxoZPWSVFtKCQ9jlboP7gNZmf3AAyBhTzrb++s2NSXXogjkGi6vt9df1ipZiawQ==
+  dependencies:
+    invariant "^2.2.4"
+
 "@react-native-firebase/app-types@6.7.2":
   version "6.7.2"
   resolved "https://registry.yarnpkg.com/@react-native-firebase/app-types/-/app-types-6.7.2.tgz#d2e1530af5702e00578914b41468898c10d3289c"
@@ -1137,6 +1144,11 @@
     "@react-native-firebase/app-types" "6.7.2"
     opencollective-postinstall "^2.0.1"
     superstruct "^0.6.2"
+
+"@react-native-firebase/messaging@^7.1.4":
+  version "7.1.4"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/messaging/-/messaging-7.1.4.tgz#43c8eda22028169a8c31263174b1e4d7b534be14"
+  integrity sha512-K4yMPqs4N/hCbgMib2ES1E9s7DvVG1BXmp8ThFlYBmvGAJcwQbDmCjlxL74HlMISb1EEStU3S9OAUIbeBaYMsw==
 
 "@react-navigation/core@^5.3.4":
   version "5.3.4"
@@ -5752,6 +5764,13 @@ react-native-easy-grid@0.2.2:
   dependencies:
     lodash "^4.17.15"
 
+react-native-firebase-push-notifications@^0.0.8:
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/react-native-firebase-push-notifications/-/react-native-firebase-push-notifications-0.0.8.tgz#e40dd7047decbf42cc3419c00ae776a590fbf0f4"
+  integrity sha512-rtpUIvXl6k11W83VIilOe26kkF26r6u1Z21hU4psYKJz98jGGiskgwJBCxCl5pcLbh7thLyp9x39hoXXMIs/Vw==
+  dependencies:
+    lodash "^4.17.11"
+
 react-native-gesture-handler@^1.6.1:
   version "1.6.1"
   resolved "https://registry.yarnpkg.com/react-native-gesture-handler/-/react-native-gesture-handler-1.6.1.tgz#678e2dce250ed66e93af409759be22cd6375dd17"
@@ -5789,6 +5808,13 @@ react-native-modal-select-list@^1.0.0:
   dependencies:
     prop-types "^15.7.2"
     styled-components "^4.3.2"
+
+react-native-push-notification@^3.5.2:
+  version "3.5.2"
+  resolved "https://registry.yarnpkg.com/react-native-push-notification/-/react-native-push-notification-3.5.2.tgz#5f6226d12a00c25c15279325b57c5fbddd5b1c82"
+  integrity sha512-eh9l7WeL7Lxq17ntsafCrNQF6aW8XS6b7PG/s1Y8amAqpDt8GJ8hz125z566N1jsj3PDh9pfd4SjNS+tLaV47A==
+  dependencies:
+    "@react-native-community/push-notification-ios" "^1.2.0"
 
 react-native-reanimated@^1.8.0:
   version "1.8.0"
